@@ -8,7 +8,8 @@
     "watch": "nodemon --exec npm run babel-node -- server.js",
     "start":"npm run babel-node -- server.js",
     "debug": "bode-debug server.js",
-    "babel-node": "babel-node --presets=es2015"
+    "babel-node": "babel-node --presets=es2015",
+    "forever": "nvm use 5; forever start -c \"npm start\" ./"
   },
   "author": "Mostafa Gaafar",
   "license": "ISC",
