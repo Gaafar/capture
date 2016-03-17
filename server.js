@@ -26,7 +26,7 @@ params (query):
 */
 app.get('/api/capture', (req, res) => {
 
-    let { url, width = 320, height = 'all', ua = null, fixed = false } = req.query;
+    let { url, width = 320, height = 568, ua = null, fixed = false } = req.query;
 
     console.log(`/api/capture url:${url}`)
     if (!url) return res.sendStatus(404);
@@ -37,25 +37,23 @@ app.get('/api/capture', (req, res) => {
 
     const CUSTOM_CSS =
         `body 
-            {animation: none !important; -webkit-animation: none !important;} 
-
-            .hotspot, .subscribe 
-            {outline: solid 3px #00FF17; background-color: rgba(0, 255, 23, 0.51)}`
+            {animation: none !important; -webkit-animation: none !important;}`
 
 
     let options = {
         screenSize: {
-            width: width
+            width: width,
+            height: height
         },
         shotSize: {
             width: width,
-            height: height
+            height: 'all'
         },
         userAgent: USER_AGENTS[ua],
         customCSS: fixed ? CUSTOM_CSS : null,
 
         // uncomment this if needed to delay screen shot
-        // renderDelay: 1000
+        renderDelay: 2000
     };
 
     let renderStream = webshot(decodeURIComponent(url), options);
