@@ -54,6 +54,7 @@ app.get('/api/capture', (req, res) => {
 
         // uncomment this if needed to delay screen shot
         renderDelay: 2000
+        phantomConfig: { 'ignore-ssl-errors': 'true' }
     };
 
     let renderStream = webshot(decodeURIComponent(url), options);
