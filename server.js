@@ -22,10 +22,11 @@ params (query):
     height :: int, page height to simulate, does not affect screenshot height as it will capture whole page anyway
     anim :: Bool, enable css animations
     ua :: USER_AGENTS, user agent to simulate
+    delay :: int, time in ms to wait before taking screenshot
 */
 app.get('/api/capture', (req, res) => {
 
-    const { url, width = 320, height = 568, ua = null, anim = false } = req.query
+    const { url, width = 320, height = 568, ua = null, anim = false, delay = 1000} = req.query
 
     console.log(`/api/capture url:${url}`)
 
@@ -50,7 +51,7 @@ app.get('/api/capture', (req, res) => {
         customCSS: anim ? '' : BLOCK_ANIM_CSS,
 
         // uncomment this if needed to delay screen shot
-        renderDelay: 1000,
+        renderDelay: delay,
 
         phantomConfig: { 'ignore-ssl-errors': 'true' },
     }
