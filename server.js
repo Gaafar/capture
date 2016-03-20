@@ -36,7 +36,7 @@ app.get('/api/capture', (req, res) => {
     const USER_AGENTS = {
         "mobile": 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.20 (KHTML, like Gecko) Mobile/7B298g'
     }
-    const BLOCK_ANIM_CSS = `* {animation: none !important; -webkit-animation: none !important;}`
+    const BLOCK_ANIM_CSS = '* {animation: none !important; -webkit-animation: none !important;}'
 
     const options = {
         screenSize: {
@@ -48,7 +48,7 @@ app.get('/api/capture', (req, res) => {
             height: 'all'
         },
         userAgent: USER_AGENTS[ua],
-        customCSS: anim ? '' : BLOCK_ANIM_CSS,
+        customCSS: anim == "true" ? '' : BLOCK_ANIM_CSS,
 
         // uncomment this if needed to delay screen shot
         renderDelay: delay,
