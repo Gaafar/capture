@@ -1,17 +1,17 @@
-import path from 'path';
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
-import { port } from './config';
-import webshot from 'webshot';
+import path from 'path'
+import express from 'express'
+import cookieParser from 'cookie-parser'
+import bodyParser from 'body-parser'
+import { port } from './config'
+import webshot from 'webshot'
 
-const app = global.app = express();
+const app = global.app = express()
 
 // Register Node.js middleware
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(cookieParser())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 /*
 get screenshot of a web page
@@ -25,19 +25,19 @@ params (query):
 */
 app.get('/api/capture', (req, res) => {
 
-    let { url, width = 320, height = 568, ua = null, anim = false } = req.query;
+    const { url, width = 320, height = 568, ua = null, anim = false } = req.query
 
     console.log(`/api/capture url:${url}`)
 
     // exit if no url sent
-    if (!url) return res.sendStatus(404);
+    if (!url) return res.sendStatus(404)
 
     const USER_AGENTS = {
         "mobile": 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.20 (KHTML, like Gecko) Mobile/7B298g'
-    };
+    }
     const BLOCK_ANIM_CSS = `body {animation: none !important; -webkit-animation: none !important;}`
 
-    let options = {
+    const options = {
         screenSize: {
             width: width,
             height: height
@@ -47,20 +47,20 @@ app.get('/api/capture', (req, res) => {
             height: 'all'
         },
         userAgent: USER_AGENTS[ua],
-        customCSS: anim ? null : BLOCK_ANIM_CSS,
+        customCSS: anim ? '' : BLOCK_ANIM_CSS,
 
         // uncomment this if needed to delay screen shot
         renderDelay: 1000,
 
-        phantomConfig: { 'ignore-ssl-errors': 'true' }
-    };
+        phantomConfig: { 'ignore-ssl-errors': 'true' },
+    }
 
-    let renderStream = webshot(decodeURIComponent(url), options);
-    renderStream.pipe(res);
+    const renderStream = webshot(decodeURIComponent(url), options)
+    renderStream.pipe(res)
 })
 
 
 // Launch the app
 app.listen(port, () => {
-    console.log(`The app is running at http://localhost:${port}/`);
-});
+    console.log(`The app is running at http://localhost:${port}/`)
+})
